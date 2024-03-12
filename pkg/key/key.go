@@ -6,3 +6,4 @@ type Attack string
 type Heal string
 type Insert string
 type Reason string
+type Blessing string
