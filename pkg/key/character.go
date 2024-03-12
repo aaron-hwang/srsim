@@ -13,6 +13,7 @@ const (
 	Himeko                Character = "himeko"
 	Hook                  Character = "hook"
 	Kafka                 Character = "kafka"
+	Lynx                  Character = "lynx"
 	Pela                  Character = "pela"
 	Qingque               Character = "qingque"
 	SilverWolf            Character = "silverwolf"
