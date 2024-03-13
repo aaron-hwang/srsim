@@ -2,6 +2,7 @@ package lynx
 
 import (
 	"github.com/simimpact/srsim/pkg/engine/event"
+	"github.com/simimpact/srsim/pkg/engine/info"
 	"github.com/simimpact/srsim/pkg/engine/modifier"
 	"github.com/simimpact/srsim/pkg/engine/prop"
 )
@@ -27,6 +28,15 @@ func init() {
 	modifier.Register(E4, modifier.Config{
 		Stacking: modifier.ReplaceBySource,
 	})
+}
+
+func (c *char) initEidolons() {
+	if c.info.Eidolon >= 1 {
+		c.engine.AddModifier(c.id, info.Modifier{
+			Source: c.id,
+			Name:   E1,
+		})
+	}
 }
 
 func e1Listener(mod *modifier.Instance, e *event.HealStart) {
