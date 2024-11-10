@@ -1,6 +1,7 @@
 package simulation
 
 import (
+	_ "github.com/simimpact/srsim/internal/character/acheron"
 	_ "github.com/simimpact/srsim/internal/character/arlan"
 	_ "github.com/simimpact/srsim/internal/character/asta"
 	_ "github.com/simimpact/srsim/internal/character/blade"

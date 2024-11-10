@@ -3,6 +3,7 @@ package key
 type Character string
 
 const (
+	Acheron               Character = "acheron"
 	Arlan                 Character = "arlan"
 	Asta                  Character = "asta"
 	Blade                 Character = "blade"
