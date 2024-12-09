@@ -64,6 +64,7 @@ type Skill struct {
 }
 
 type Ult struct {
+	EnergyNeed float64 `exhaustruct:"optional"`
 	TargetType model.TargetType
 	CanUse     UltValidateFunc `exhaustruct:"optional"`
 }

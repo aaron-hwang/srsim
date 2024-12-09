@@ -65,17 +65,32 @@ func (sim *Simulation) ultCheck() error {
 		return err
 	}
 	for _, act := range ults {
+		ultinfo, _ := sim.Char.SkillInfo(act.Target)
 		canuse, err := sim.CanUseUlt(act.Target)
 		if err != nil {
 			return err
 		}
 		if canuse {
 			sim.InsertUlt(act)
-			sim.Attr.SetEnergy(info.ModifyAttribute{
+			energyConsumption := ultinfo.Ult.EnergyNeed
+			if energyConsumption < 0 {
+				// sentinel value
+				energyConsumption = 0
+			} else if energyConsumption == 0 {
+				// Default value
+				sim.Attr.SetEnergy(info.ModifyAttribute{
+					Key:    "ult",
+					Target: act.Target,
+					Source: act.Target,
+					Amount: 0,
+				})
+				return nil
+			}
+			sim.Attr.ModifyEnergyFixed(info.ModifyAttribute{
 				Key:    "ult",
 				Target: act.Target,
 				Source: act.Target,
-				Amount: 0,
+				Amount: -energyConsumption,
 			})
 		}
 	}
