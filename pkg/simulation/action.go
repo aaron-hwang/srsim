@@ -84,7 +84,7 @@ func (sim *Simulation) ultCheck() error {
 					Source: act.Target,
 					Amount: 0,
 				})
-				return nil
+				continue
 			}
 			sim.Attr.ModifyEnergyFixed(info.ModifyAttribute{
 				Key:    "ult",
