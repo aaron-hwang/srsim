@@ -95,6 +95,8 @@ enum Property {
   ALL_DMG_REDUCE = 90;
   FATIGUE = 91;
   MIN_FATIGUE = 92; // TODO: unnecessary?
+  // Reduce maximum healable hp ratio to 1 - DIRTY_HP_RATIO
+  DIRTY_HP_RATIO = 93;
 
   // OMITTED (Stance Break = reducing toughness bar. Break Damage = Break Effect):
   // - CRIT_RES
