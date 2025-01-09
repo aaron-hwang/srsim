@@ -79,23 +79,24 @@ func _() {
 	_ = x[AllDamageReduce-90]
 	_ = x[Fatigue-91]
 	_ = x[MinFatigue-92]
+	_ = x[DirtyHpRatio-93]
 }
 
 const (
 	_Property_name_0 = "InvalidHPBaseHPPercentHPFlatHPConvertATKBaseATKPercentATKFlatATKConvertDEFBaseDEFPercentDEFFlatDEFConvertSPDBaseSPDPercentSPDFlatSPDConvertCritChanceCritDMGEnergyRegenEnergyRegenConvertEffectHitRateEffectHitRateConvertEffectRESEffectRESConvertHealBoostHealBoostConvertHealTakenShieldBoostShieldTakenAggroBaseAggroPercentAggroFlatBreakEffectAllDamageRESPhysicalDamageRESFireDamageRESIceDamageRESThunderDamageRESQuantumDamageRESImaginaryDamageRESWindDamageRESAllDamagePENPhysicalPENFirePENIcePENThunderPENQuantumPENImaginaryPENWindPENAllDamageTakenPhysicalDamageTakenFireDamageTakenIceDamageTakenThunderDamageTakenQuantumDamageTakenImaginaryDamageTakenWindDamageTakenAllDamagePercentDOTDamagePercentFireDamagePercentIceDamagePercentThunderDamagePercentQuantumDamagePercentImaginaryDamagePercentWindDamagePercentPhysicalDamagePercentAllStanceDMGPercent"
-	_Property_name_1 = "AllDamageReduceFatigueMinFatigue"
+	_Property_name_1 = "AllDamageReduceFatigueMinFatigueDirtyHpRatio"
 )
 
 var (
 	_Property_index_0 = [...]uint16{0, 7, 13, 22, 28, 37, 44, 54, 61, 71, 78, 88, 95, 105, 112, 122, 129, 139, 149, 156, 167, 185, 198, 218, 227, 243, 252, 268, 277, 288, 299, 308, 320, 329, 340, 352, 369, 382, 394, 410, 426, 444, 457, 469, 480, 487, 493, 503, 513, 525, 532, 546, 565, 580, 594, 612, 630, 650, 665, 681, 697, 714, 730, 750, 770, 792, 809, 830, 849}
-	_Property_index_1 = [...]uint8{0, 15, 22, 32}
+	_Property_index_1 = [...]uint8{0, 15, 22, 32, 44}
 )
 
 func (i Property) String() string {
 	switch {
 	case 0 <= i && i <= 67:
 		return _Property_name_0[_Property_index_0[i]:_Property_index_0[i+1]]
-	case 90 <= i && i <= 92:
+	case 90 <= i && i <= 93:
 		i -= 90
 		return _Property_name_1[_Property_index_1[i]:_Property_index_1[i+1]]
 	default:

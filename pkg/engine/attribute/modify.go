@@ -19,10 +19,11 @@ func (s *Service) SetHP(data info.ModifyAttribute, isDamage bool) error {
 	oldRatio := attr.HPRatio
 	stats := s.Stats(data.Target)
 	attr.HPRatio = data.Amount / stats.MaxHP()
+	finalRatio := 1 - stats.GetProperty(prop.DirtyHpRatio)
 
 	// TODO: unsure if there are limits on min and max
-	if attr.HPRatio > 1 {
-		attr.HPRatio = 1.0
+	if attr.HPRatio > finalRatio {
+		attr.HPRatio = finalRatio
 	} else if attr.HPRatio < 0 {
 		attr.HPRatio = 0
 	}
@@ -41,12 +42,16 @@ func (s *Service) ModifyHPByAmount(data info.ModifyAttribute, isDamage bool) err
 	oldRatio := attr.HPRatio
 	stats := s.Stats(data.Target)
 
+	finalRatio := 1 - stats.GetProperty(prop.DirtyHpRatio)
 	newHP := stats.CurrentHP() + data.Amount
+	if newHP > finalRatio*stats.MaxHP() {
+		newHP = finalRatio * stats.MaxHP()
+	}
 	attr.HPRatio = newHP / stats.MaxHP()
 
 	// TODO: unsure if there are limits on min and max
-	if attr.HPRatio > 1 {
-		attr.HPRatio = 1.0
+	if attr.HPRatio > finalRatio {
+		attr.HPRatio = finalRatio
 	} else if attr.HPRatio < 0 {
 		attr.HPRatio = 0
 	}

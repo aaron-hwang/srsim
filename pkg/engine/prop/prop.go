@@ -120,6 +120,8 @@ const (
 	AllDamageReduce Property = 90
 	Fatigue         Property = 91
 	MinFatigue      Property = 92
+
+	DirtyHpRatio Property = 93
 )
 
 func Total() int {
