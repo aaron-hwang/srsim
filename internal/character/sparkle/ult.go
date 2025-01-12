@@ -60,7 +60,7 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 			Max:          1,
 			IncludeLimbo: false,
 		})
-		if len(alliesWithCritBuff) >= 0 {
+		if len(alliesWithCritBuff) > 0 {
 			sparkle := c.engine.Stats(c.id)
 			sparkleCdmg := sparkle.GetProperty(prop.CritDMG)
 			proportion := skillCdmgScaling[c.info.SkillLevelIndex()]
