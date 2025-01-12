@@ -49,7 +49,7 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 
 	sparkle := c.engine.Stats(c.id)
 	sparkleCdmg := sparkle.GetProperty(prop.CritDMG)
-	proportion := Skill_0[c.info.SkillLevelIndex()]
+	proportion := skillCdmgScaling[c.info.SkillLevelIndex()]
 	if c.info.Eidolon >= 6 {
 		proportion += 0.3
 	}
@@ -58,13 +58,13 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 		Source:   c.id,
 		Duration: 1,
 		State: SparkleBuffState{
-			cdmgBuff: proportion*sparkleCdmg + Skill_1[c.info.SkillLevelIndex()],
+			cdmgBuff: proportion*sparkleCdmg + skillFlatCdmg[c.info.SkillLevelIndex()],
 		},
 	})
 
 	// At e6, when using skill sparkle should add skill buff to all teammates with cipher
 	if c.info.Eidolon >= 6 {
-		targets := make([]key.TargetID, 4)
+		targets := make([]key.TargetID, 0, 4)
 		for _, char := range c.engine.Characters() {
 			if c.engine.HasModifier(char, Cipher) {
 				targets = append(targets, char)
@@ -77,11 +77,18 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 				Source:   c.id,
 				Duration: 1,
 				State: SparkleBuffState{
-					cdmgBuff: proportion*sparkleCdmg + Skill_1[c.info.SkillLevelIndex()],
+					cdmgBuff: proportion*sparkleCdmg + skillFlatCdmg[c.info.SkillLevelIndex()],
 				},
 			})
 		}
 	}
+
+	c.engine.ModifyEnergy(info.ModifyAttribute{
+		Key:    SparkleSkill,
+		Source: c.id,
+		Target: c.id,
+		Amount: 30,
+	})
 }
 
 func addActualBuff(mod *modifier.Instance) {
