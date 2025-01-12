@@ -16,7 +16,8 @@ func init() {
 		Stacking: modifier.ReplaceBySource,
 		MaxCount: 3,
 		Listeners: modifier.Listeners{
-			OnAdd: adjustBuff,
+			OnAdd:    adjustBuff,
+			OnRemove: removeE2,
 		},
 	})
 }
@@ -28,6 +29,8 @@ type talentState struct {
 
 func (c *char) initTalent() {
 	c.engine.Events().SPChange.Subscribe(c.talent)
+	c.engine.Events().ModifierAdded.Subscribe(c.adjustTalentBuff)
+	c.engine.Events().ModifierRemoved.Subscribe(c.revertTalentBuff)
 	//TODO: Modify maximum sp count once the api for doing so is defined.
 }
 
@@ -41,7 +44,7 @@ func (c *char) talent(e event.SPChange) {
 				Duration: 2,
 				Count:    float64(spChange),
 				State: talentState{
-					DmgPercentPerStack: Talent_1[c.info.TalentLevelIndex()],
+					DmgPercentPerStack: talent[c.info.TalentLevelIndex()],
 					isE2:               c.info.Eidolon >= 2,
 				},
 			})
@@ -58,6 +61,49 @@ func adjustBuff(mod *modifier.Instance) {
 			Name:      E2,
 			Source:    mod.Source(),
 			CanDispel: false,
+			Count:     mod.Count(),
 		})
+	}
+}
+
+func (c *char) adjustTalentBuff(e event.ModifierAdded) {
+	if e.Modifier.Name == Cipher && e.Modifier.Source == c.id {
+		for _, char := range c.engine.Characters() {
+			curstacks := c.engine.ModifierStackCount(char, c.id, SparkleTalent)
+			c.engine.AddModifier(char, info.Modifier{
+				Name:     SparkleTalent,
+				Source:   c.id,
+				Duration: 2,
+				Count:    curstacks,
+				State: talentState{
+					DmgPercentPerStack: talent[c.info.TalentLevelIndex()] + ultimate[c.info.UltLevelIndex()],
+					isE2:               c.info.Eidolon >= 2,
+				},
+			})
+		}
+	}
+}
+
+func (c *char) revertTalentBuff(e event.ModifierRemoved) {
+	if e.Modifier.Name == Cipher && e.Modifier.Source == c.id {
+		for _, char := range c.engine.Characters() {
+			curstacks := c.engine.ModifierStackCount(char, c.id, SparkleTalent)
+			c.engine.AddModifier(char, info.Modifier{
+				Name:     SparkleTalent,
+				Source:   c.id,
+				Duration: 2,
+				Count:    curstacks,
+				State: talentState{
+					DmgPercentPerStack: talent[c.info.TalentLevelIndex()],
+					isE2:               c.info.Eidolon >= 2,
+				},
+			})
+		}
+	}
+}
+
+func removeE2(mod *modifier.Instance) {
+	for _, char := range mod.Engine().Characters() {
+		mod.Engine().RemoveModifier(char, E2)
 	}
 }
