@@ -35,7 +35,7 @@ func init() {
 	})
 }
 
-type SparkleBuffState struct {
+type SkillBuffState struct {
 	cdmgBuff float64
 }
 
@@ -57,7 +57,7 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 		Name:     SparkleSkillBuff,
 		Source:   c.id,
 		Duration: 1,
-		State: SparkleBuffState{
+		State: SkillBuffState{
 			cdmgBuff: proportion*sparkleCdmg + skillFlatCdmg[c.info.SkillLevelIndex()],
 		},
 	})
@@ -76,7 +76,7 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 				Name:     SparkleSkillBuff,
 				Source:   c.id,
 				Duration: 1,
-				State: SparkleBuffState{
+				State: SkillBuffState{
 					cdmgBuff: proportion*sparkleCdmg + skillFlatCdmg[c.info.SkillLevelIndex()],
 				},
 			})
@@ -97,7 +97,7 @@ func addActualBuff(mod *modifier.Instance) {
 		Name:   Dreamdiver,
 		Source: mod.Source(),
 		Stats: info.PropMap{
-			prop.CritDMG: mod.State().(SparkleBuffState).cdmgBuff,
+			prop.CritDMG: mod.State().(SkillBuffState).cdmgBuff,
 		},
 	})
 }
@@ -109,7 +109,7 @@ func A4Extend(mod *modifier.Instance) {
 			Name:   Dreamdiver,
 			Source: mod.Source(),
 			Stats: info.PropMap{
-				prop.CritDMG: mod.State().(SparkleBuffState).cdmgBuff,
+				prop.CritDMG: mod.State().(SkillBuffState).cdmgBuff,
 			},
 		})
 	}
