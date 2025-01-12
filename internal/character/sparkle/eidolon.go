@@ -16,9 +16,10 @@ func init() {
 		Listeners: modifier.Listeners{
 			OnBeforeHitAll: E2Callback,
 		},
+		MaxCount: 3,
 	})
 }
 
 func E2Callback(mod *modifier.Instance, e event.HitStart) {
-	e.Hit.Defender.AddProperty(E2, prop.DEFPercent, -0.08)
+	e.Hit.Defender.AddProperty(E2, prop.DEFPercent, -0.08*mod.Count())
 }
