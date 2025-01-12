@@ -10,6 +10,7 @@ import (
 
 const (
 	Cipher = "sparkle-cipher"
+	Ult    = "sparkle-ult"
 )
 
 func init() {
@@ -26,6 +27,13 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 	if c.info.Eidolon >= 4 {
 		spRecover += 1
 	}
+
+	c.engine.ModifySP(info.ModifySP{
+		Source: c.id,
+		Key:    Ult,
+		Amount: spRecover,
+	})
+
 	buffdur := 2
 	atkBuff := 0.0
 	if c.info.Eidolon >= 1 {
@@ -55,7 +63,7 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 		if len(alliesWithCritBuff) >= 0 {
 			sparkle := c.engine.Stats(c.id)
 			sparkleCdmg := sparkle.GetProperty(prop.CritDMG)
-			proportion := Skill_0[c.info.SkillLevelIndex()]
+			proportion := skillCdmgScaling[c.info.SkillLevelIndex()]
 			if c.info.Eidolon >= 6 {
 				proportion += 0.3
 			}
@@ -72,4 +80,11 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 			}
 		}
 	}
+
+	c.engine.ModifyEnergy(info.ModifyAttribute{
+		Key:    Ult,
+		Source: c.id,
+		Target: c.id,
+		Amount: 5,
+	})
 }
