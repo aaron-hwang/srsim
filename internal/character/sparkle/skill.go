@@ -11,6 +11,7 @@ import (
 const (
 	SparkleSkillBuff = "SparkleSkillBuff"
 	Dreamdiver       = "dreamdiver"
+	SparkleSkill     = "sparkle-skill"
 )
 
 func init() {
@@ -39,6 +40,13 @@ type SparkleBuffState struct {
 }
 
 func (c *char) Skill(target key.TargetID, state info.ActionState) {
+	c.engine.ModifyGaugeNormalized(info.ModifyAttribute{
+		Key:    SparkleSkill,
+		Target: target,
+		Source: c.id,
+		Amount: -0.5,
+	})
+
 	sparkle := c.engine.Stats(c.id)
 	sparkleCdmg := sparkle.GetProperty(prop.CritDMG)
 	proportion := Skill_0[c.info.SkillLevelIndex()]
