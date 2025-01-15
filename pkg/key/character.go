@@ -10,6 +10,7 @@ const (
 	Clara                 Character = "clara"
 	DanHeng               Character = "danheng"
 	DanHengImbibitorLunae Character = "danhengimbibitorlunae"
+	DrRatio               Character = "drratio"
 	Gepard                Character = "gepard"
 	Jingliu               Character = "jingliu"
 	Gallagher             Character = "gallagher"

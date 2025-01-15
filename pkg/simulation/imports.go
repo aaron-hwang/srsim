@@ -8,6 +8,7 @@ import (
 	_ "github.com/simimpact/srsim/internal/character/clara"
 	_ "github.com/simimpact/srsim/internal/character/danheng"
 	_ "github.com/simimpact/srsim/internal/character/danhengimbibitorlunae"
+	_ "github.com/simimpact/srsim/internal/character/drratio"
 	_ "github.com/simimpact/srsim/internal/character/dummy"
 	_ "github.com/simimpact/srsim/internal/character/gallagher"
 	_ "github.com/simimpact/srsim/internal/character/gepard"
