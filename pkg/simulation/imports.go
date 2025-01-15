@@ -16,6 +16,7 @@ import (
 	_ "github.com/simimpact/srsim/internal/character/himeko"
 	_ "github.com/simimpact/srsim/internal/character/hook"
 	_ "github.com/simimpact/srsim/internal/character/huohuo"
+	_ "github.com/simimpact/srsim/internal/character/jade"
 	_ "github.com/simimpact/srsim/internal/character/jingliu"
 	_ "github.com/simimpact/srsim/internal/character/kafka"
 	_ "github.com/simimpact/srsim/internal/character/luka"
