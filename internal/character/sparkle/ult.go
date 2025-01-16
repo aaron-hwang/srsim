@@ -16,7 +16,6 @@ const (
 func init() {
 	modifier.Register(Cipher, modifier.Config{
 		Stacking:   modifier.ReplaceBySource,
-		CanDispel:  false,
 		Duration:   2,
 		StatusType: model.StatusType_STATUS_BUFF,
 	})
@@ -69,14 +68,22 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 			}
 
 			for _, char := range c.engine.Characters() {
-				c.engine.AddModifier(char, info.Modifier{
-					Name:     Dreamdiver,
-					Source:   c.id,
-					Duration: 1,
-					Stats: info.PropMap{
-						prop.CritDMG: sparkleCdmg * proportion,
-					},
-				})
+				if c.engine.HasModifier(char, SparkleSkillBuff) {
+					c.engine.AddModifier(char, info.Modifier{
+						Name:     SparkleSkillBuff,
+						Source:   c.id,
+						Duration: 1,
+					})
+				} else if c.engine.HasModifier(char, Dreamdiver) {
+					c.engine.AddModifier(char, info.Modifier{
+						Name:     Dreamdiver,
+						Source:   c.id,
+						Duration: 1,
+						Stats: info.PropMap{
+							prop.CritDMG: sparkleCdmg * proportion,
+						},
+					})
+				}
 			}
 		}
 	}
