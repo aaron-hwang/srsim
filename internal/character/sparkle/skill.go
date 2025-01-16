@@ -9,13 +9,13 @@ import (
 )
 
 const (
-	SparkleSkillBuff = "SparkleSkillBuff"
-	Dreamdiver       = "dreamdiver"
-	SparkleSkill     = "sparkle-skill"
+	Dreamdiver          = "dreamdiver"
+	DreamdiverExtension = "dreamdiver-extension"
+	SparkleSkill        = "sparkle-skill"
 )
 
 func init() {
-	modifier.Register(SparkleSkillBuff, modifier.Config{
+	modifier.Register(Dreamdiver, modifier.Config{
 		Stacking:   modifier.ReplaceBySource,
 		CanDispel:  true,
 		StatusType: model.StatusType_STATUS_BUFF,
@@ -26,7 +26,7 @@ func init() {
 		Duration: 1,
 	})
 
-	modifier.Register(Dreamdiver, modifier.Config{
+	modifier.Register(DreamdiverExtension, modifier.Config{
 		Stacking:   modifier.Replace,
 		CanDispel:  true,
 		StatusType: model.StatusType_STATUS_BUFF,
@@ -57,7 +57,7 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 		proportion += 0.3
 	}
 	c.engine.AddModifier(target, info.Modifier{
-		Name:     SparkleSkillBuff,
+		Name:     Dreamdiver,
 		Source:   c.id,
 		Duration: 1,
 		State: SkillBuffState{
@@ -76,7 +76,7 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 
 		for _, char := range targets {
 			c.engine.AddModifier(char, info.Modifier{
-				Name:     SparkleSkillBuff,
+				Name:     Dreamdiver,
 				Source:   c.id,
 				Duration: 1,
 				State: SkillBuffState{
@@ -95,9 +95,9 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 }
 
 func addActualBuff(mod *modifier.Instance) {
-	mod.Engine().RemoveModifier(mod.Owner(), Dreamdiver)
+	mod.Engine().RemoveModifier(mod.Owner(), DreamdiverExtension)
 	mod.Engine().AddModifier(mod.Owner(), info.Modifier{
-		Name:   Dreamdiver,
+		Name:   DreamdiverExtension,
 		Source: mod.Source(),
 		Stats: info.PropMap{
 			prop.CritDMG: mod.State().(SkillBuffState).cdmgBuff,
@@ -109,7 +109,7 @@ func A4Extend(mod *modifier.Instance) {
 	sparkleinfo, _ := mod.Engine().CharacterInfo(mod.Source())
 	if sparkleinfo.Traces["102"] {
 		mod.Engine().AddModifier(mod.Owner(), info.Modifier{
-			Name:   Dreamdiver,
+			Name:   DreamdiverExtension,
 			Source: mod.Source(),
 			Stats: info.PropMap{
 				prop.CritDMG: mod.State().(SkillBuffState).cdmgBuff,
