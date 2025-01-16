@@ -5,6 +5,7 @@ import (
 	"github.com/simimpact/srsim/pkg/engine/info"
 	"github.com/simimpact/srsim/pkg/engine/modifier"
 	"github.com/simimpact/srsim/pkg/engine/prop"
+	"github.com/simimpact/srsim/pkg/model"
 )
 
 const (
@@ -19,6 +20,8 @@ func init() {
 			OnAdd:    adjustBuff,
 			OnRemove: removeE2,
 		},
+		CanDispel:  true,
+		StatusType: model.StatusType_STATUS_BUFF,
 	})
 }
 
