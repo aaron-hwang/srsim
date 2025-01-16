@@ -23,8 +23,7 @@ func init() {
 			OnAdd:    addActualBuff,
 			OnRemove: A4Extend,
 		},
-		TickMoment: modifier.ModifierPhase1End,
-		Duration:   1,
+		Duration: 1,
 	})
 
 	modifier.Register(Dreamdiver, modifier.Config{
@@ -32,6 +31,7 @@ func init() {
 		CanDispel:  true,
 		StatusType: model.StatusType_STATUS_BUFF,
 		Duration:   1,
+		TickMoment: modifier.ModifierPhase1End,
 	})
 }
 
@@ -39,13 +39,16 @@ type SkillBuffState struct {
 	cdmgBuff float64
 }
 
+// TODO: Adjust skill crit scaling to use Base/Convert versions of crit buffs when appropriate. (once implemented)
 func (c *char) Skill(target key.TargetID, state info.ActionState) {
-	c.engine.ModifyGaugeNormalized(info.ModifyAttribute{
-		Key:    SparkleSkill,
-		Target: target,
-		Source: c.id,
-		Amount: -0.5,
-	})
+	if target != c.id {
+		c.engine.ModifyGaugeNormalized(info.ModifyAttribute{
+			Key:    SparkleSkill,
+			Target: target,
+			Source: c.id,
+			Amount: -0.5,
+		})
+	}
 
 	sparkle := c.engine.Stats(c.id)
 	sparkleCdmg := sparkle.GetProperty(prop.CritDMG)
