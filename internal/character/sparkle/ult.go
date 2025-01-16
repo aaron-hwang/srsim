@@ -54,7 +54,7 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 		alliesWithCritBuff := c.engine.Retarget(info.Retarget{
 			Targets: c.engine.Characters(),
 			Filter: func(target key.TargetID) bool {
-				return c.engine.HasModifier(target, SparkleSkillBuff) || c.engine.HasModifier(target, Dreamdiver)
+				return c.engine.HasModifier(target, Dreamdiver) || c.engine.HasModifier(target, DreamdiverExtension)
 			},
 			Max:          1,
 			IncludeLimbo: false,
@@ -68,15 +68,15 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 			}
 
 			for _, char := range c.engine.Characters() {
-				if c.engine.HasModifier(char, SparkleSkillBuff) {
+				if c.engine.HasModifier(char, Dreamdiver) {
 					c.engine.AddModifier(char, info.Modifier{
-						Name:     SparkleSkillBuff,
+						Name:     Dreamdiver,
 						Source:   c.id,
 						Duration: 1,
 					})
-				} else if c.engine.HasModifier(char, Dreamdiver) {
+				} else if c.engine.HasModifier(char, DreamdiverExtension) {
 					c.engine.AddModifier(char, info.Modifier{
-						Name:     Dreamdiver,
+						Name:     DreamdiverExtension,
 						Source:   c.id,
 						Duration: 1,
 						Stats: info.PropMap{
