@@ -12,12 +12,27 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 	if insertChance > 1.0 {
 		insertChance = 1.0
 	}
-
+	insertTriggered := false
 	if c.engine.Rand().Float64() > insertChance {
 		// mark the enemy to be hit with FUA
+		insertTriggered = true
 	}
-
+	cap := 6
+	if c.info.Eidolon >= 1 {
+		cap += 4
+	}
 	// init a2 stacks
+	if c.info.Traces["101"] {
+		stacks := debuffCount
+		if stacks > cap {
+			stacks = cap
+		}
+		c.engine.AddModifier(c.id, info.Modifier{
+			Name:   A2,
+			Source: c.id,
+			Count:  float64(stacks),
+		})
+	}
 
 	// do the damage
 
@@ -26,4 +41,7 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 	// apply a4
 
 	// if
+	if insertTriggered {
+
+	}
 }
