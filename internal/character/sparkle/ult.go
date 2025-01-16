@@ -60,31 +60,7 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 			IncludeLimbo: false,
 		})
 		if len(alliesWithCritBuff) > 0 {
-			sparkle := c.engine.Stats(c.id)
-			sparkleCdmg := sparkle.GetProperty(prop.CritDMG)
-			proportion := skillCdmgScaling[c.info.SkillLevelIndex()]
-			if c.info.Eidolon >= 6 {
-				proportion += 0.3
-			}
-
-			for _, char := range c.engine.Characters() {
-				if c.engine.HasModifier(char, Dreamdiver) {
-					c.engine.AddModifier(char, info.Modifier{
-						Name:     Dreamdiver,
-						Source:   c.id,
-						Duration: 1,
-					})
-				} else if c.engine.HasModifier(char, DreamdiverExtension) {
-					c.engine.AddModifier(char, info.Modifier{
-						Name:     DreamdiverExtension,
-						Source:   c.id,
-						Duration: 1,
-						Stats: info.PropMap{
-							prop.CritDMG: sparkleCdmg * proportion,
-						},
-					})
-				}
-			}
+			c.spreadBuff()
 		}
 	}
 
@@ -94,4 +70,30 @@ func (c *char) Ult(target key.TargetID, state info.ActionState) {
 		Target: c.id,
 		Amount: 5,
 	})
+}
+
+func (c *char) spreadBuff() {
+	sparkle := c.engine.Stats(c.id)
+	sparkleCdmg := sparkle.GetProperty(prop.CritDMG)
+	// We check for e6 above
+	proportion := skillCdmgScaling[c.info.SkillLevelIndex()] + 0.3
+
+	for _, char := range c.engine.Characters() {
+		if c.engine.HasModifier(char, Dreamdiver) {
+			c.engine.AddModifier(char, info.Modifier{
+				Name:     Dreamdiver,
+				Source:   c.id,
+				Duration: 1,
+			})
+		} else if c.engine.HasModifier(char, DreamdiverExtension) {
+			c.engine.AddModifier(char, info.Modifier{
+				Name:     DreamdiverExtension,
+				Source:   c.id,
+				Duration: 1,
+				Stats: info.PropMap{
+					prop.CritDMG: sparkleCdmg * proportion,
+				},
+			})
+		}
+	}
 }
