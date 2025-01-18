@@ -40,7 +40,7 @@ func (c *char) Skill(target key.TargetID, state info.ActionState) {
 
 	// apply a4
 
-	// if
+	// do fua if triggered
 	if insertTriggered {
 
 	}
