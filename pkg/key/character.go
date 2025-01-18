@@ -26,6 +26,7 @@ const (
 	Sampo                 Character = "sampo"
 	Serval                Character = "serval"
 	Sushang               Character = "sushang"
+	TrailblazerFire       Character = "trailblazerfire"
 	Natasha               Character = "natasha"
 	March7th              Character = "march7th"
 	Seele                 Character = "seele"
