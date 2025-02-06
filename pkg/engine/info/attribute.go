@@ -59,7 +59,7 @@ type ModifySP struct {
 	// The source of this modification
 	Source key.TargetID `json:"source"`
 
-	// The amount of SP to be added or removed
+	// The amount of SP or maximum SP to be added or removed
 	Amount int `json:"amount"`
 }
 

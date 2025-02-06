@@ -72,7 +72,7 @@ export interface ModifySP {
    */
   source: string;
   /**
-   * The amount of SP to be added or removed
+   * The amount of SP or maximum SP to be added or removed
    */
   amount: number /* int */;
 }
@@ -210,12 +210,12 @@ export interface Hit {
    * The stats of the attacker of this hit. These stats are a snapshot of the target's state and
    * can be modified
    */
-  attacker?: Stats;
+  attacker?: StatsEncoded;
   /**
    * The stats of the defender of this hit. These stats are a snapshot of the target's state and
    * can be modified
    */
-  defender?: Stats;
+  defender?: StatsEncoded;
   /**
    * The type of attack (IE: dot, ult, insert, etc)
    */
@@ -351,7 +351,7 @@ export interface Modifier {
    */
   duration: number /* int */;
   /**
-   * When duration is > 0, the turn a modifier is added on will not count torwards the duration.
+   * When duration is > 0, the turn a modifier is added on will not count towards the duration.
    * If this field is set to true, this will override that behavior and count the application turn
    * against the duration (if application happens before the check).
    */
@@ -388,6 +388,12 @@ export interface Modifier {
    * Any additional weaknesses that are applied to the target by this modifier.
    */
   weakness: WeaknessMap;
+  /**
+   * CanDispel indicates whether the modifier can be removed through dispel effects.
+   * If true, the modifier can be targeted and removed by dispel abilities; if false (default),
+   * it is immune to dispel.
+   */
+  can_dispel: boolean;
 }
 export interface Dispel {
   /**
